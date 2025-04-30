@@ -1,0 +1,101 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Featured Blogs &amp; Links</title>
+  <style>
+    body {
+      background: black;
+      color: white;
+      font-family: sans-serif;
+      margin: 0;
+      padding: 0;
+    }
+    .container {
+      max-width: 1200px;
+      margin: 2rem auto;
+      padding: 0 1rem;
+    }
+    h1.page-title {
+      text-align: center;
+      margin-bottom: 1.5rem;
+      font-size: 2rem;
+    }
+    .blog-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+      gap: 1.5rem;
+    }
+    .blog-card {
+      background: #2a2929;
+      border-radius: 8px;
+      overflow: hidden;
+      display: flex;
+      flex-direction: column;
+      box-shadow: 0 4px 8px rgba(0,0,0,0.3);
+    }
+    .blog-card img {
+      width: 100%;
+      height: 180px;
+      object-fit: cover;
+    }
+    .card-content {
+      flex: 1;
+      padding: 1rem;
+      display: flex;
+      flex-direction: column;
+    }
+    .card-content h3 {
+      margin: 0 0 0.5rem;
+      font-size: 1.25rem;
+    }
+    .card-content p {
+      flex: 1;
+      margin: 0 0 1rem;
+      line-height: 1.4;
+      font-size: 0.95rem;
+    }
+    .card-content a.btn {
+      align-self: start;
+      background: rgb(9, 1, 163);
+      color: #fff;
+      text-decoration: none;
+      padding: 0.6rem 1.2rem;
+      border-radius: 4px;
+      font-weight: bold;
+      transition: background 0.2s;
+    }
+    .card-content a.btn:hover {
+      background: rgb(6, 1, 111);
+    }
+
+    #eesa-logo {
+        padding-left: 50px;
+        padding-top: 20px;
+        width: 7.5%;
+        height: auto;
+    }
+  </style>
+</head>
+<body>
+    <img src="{{ logo.image.url }}" alt="{{ logo.title }}" id="eesa-logo">
+
+  <div class="container">
+    <h1 class="page-title">Featured Blogs &amp; Links</h1>
+    <div class="blog-grid">
+      {% for blog in blogs %}
+        <div class="blog-card">
+          {% if blog.image %}
+            <img src="{{ blog.image.url }}" alt="{{ blog.title }}">
+          {% endif %}
+          <div class="card-content">
+            <h3>{{ blog.title }}</h3>
+            <p>{{ blog.description }}</p>
+            <a href="{{ blog.link }}" class="btn" target="_blank" rel="noopener">Check It Out!</a>
+          </div>
+        </div>
+      {% endfor %}
+    </div>
+  </div>
+</body>
+</html>

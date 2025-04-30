@@ -1,0 +1,135 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Image Slideshow with Arrows</title>
+  <style>
+    #slideshow {
+      max-width: 600px;
+      margin: 0 auto;
+      position: relative;
+      overflow: hidden;
+
+      
+        display: flex;        
+        justify-content: center;  
+        align-items: center; 
+    }
+    #slideshow img {
+      width: 75%;
+      height: auto;
+      display: none;
+      position: absolute;
+      top: 0;
+      left: 0;
+      transition: opacity 0.5s ease;
+      opacity: 0;
+    }
+    #slideshow img.active {
+      display: block;
+      opacity: 1;
+      position: relative;
+    }
+    .arrow {
+      position: absolute;
+      top: 50%;
+      transform: translateY(-50%);
+      font-size: 2rem;
+      padding: 0.5rem;
+      background: rgba(0,0,0,0.3);
+      color: rgba(255, 255, 255, 0.4);
+      cursor: pointer;
+      user-select: none;
+      border-radius: 50%;
+      z-index: 1000;
+    }
+    .arrow:hover {
+        color: rgb(255, 255, 255);
+    }
+    .prev { left: 10%; }
+    .next { right: 10%; }
+
+    #eesa-logo {
+        padding-left: 50px;
+        padding-top: 20px;
+        width: 7.5%;
+        height: auto;
+    }
+
+    #council-mem {
+        color: rgb(255, 255, 255);
+        text-align: center;
+        font-size: 30px;
+        font-family: Cambria, Cochin, Georgia, Times, 'Times New Roman', serif;
+    }
+
+    .council {
+      display: flex;      
+      gap: 10px;        
+      overflow-x: auto;   
+      padding: 10px;
+      max-width: fit-content;
+      margin-left: auto;
+      margin-right: auto;
+    }
+    .council img {
+      max-height: 190px;  
+      height: auto;
+      display: block;
+    }
+
+    .council-names {
+        color: white;
+        text-align: center;
+        font-size: 20px;
+    }
+
+    body {
+        background-color: black;
+    }
+  </style>
+</head>
+<body>
+    <img src="{{ logo.image.url }}" alt="{{ logo.title }}" id="eesa-logo">
+
+  <div id="slideshow">
+    <div class="arrow prev">&#10094;</div>
+    {% for slide in slides %}
+      <img src="{{ slide.image.url }}" alt="{{ slide.title }}"
+           class="{% if forloop.first %}active{% endif %}">
+    {% endfor %}
+    <div class="arrow next">&#10095;</div>
+  </div>
+
+  <h2 id="council-mem">Council Members</h2>
+
+  <div class="council">
+    {% for member in council %}
+      <div>
+        <img src="{{ member.image.url }}" alt="{{ member.title }}">
+        <p class="council-names">{{ member.title }}</p>
+      </div>
+    {% endfor %}
+  </div>
+
+  <script>
+    const slides = document.querySelectorAll('#slideshow img');
+    let current = 0;
+
+    function showSlide(index) {
+      slides[current].classList.remove('active');
+      current = (index + slides.length) % slides.length;
+      slides[current].classList.add('active');
+    }
+
+    document.querySelector('.prev').addEventListener('click', () => {
+      showSlide(current - 1);
+    });
+
+    document.querySelector('.next').addEventListener('click', () => {
+      showSlide(current + 1);
+    });
+
+  </script>
+</body>
+</html>
